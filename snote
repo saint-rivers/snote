@@ -1,0 +1,6 @@
+#!/bin/bash
+
+#grep -i "PATH=" $HOME/temp.txt
+
+#echo 
+python3 /home/saint-rivers/snote/main.py $*
