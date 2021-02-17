@@ -1,7 +1,6 @@
 import sys
 import snotestacks as snack
 import os
-import re
 
 global user_command
 
@@ -15,13 +14,21 @@ command_not_found_message = "command not listed" \
                             "\nrun 'snote help' for commands I can run"
 
 
+def get_help_input():
+    try:
+        command = str(input('Enter command: '))
+        return command.replace(" ", "")
+    except KeyboardInterrupt:
+        print('\n')
+        exit(0)
+
+
 def display_menu():
     global user_command
     print("type 'stack' to enter entry mode")
     print("type 'read' to display all entries")
     print("type 'read simple' to display without timestamps")
-    user_command = str(input('Enter command: '))
-    re.sub(r"\s+", "", user_command)
+    user_command = get_help_input()
 
 
 command_dict = dict(
@@ -29,6 +36,7 @@ command_dict = dict(
     stack=snack.stack_run,
     reads=snack.read_simple,
     readsimple=snack.read_simple,
+    help=display_menu,
     q=snack.quick_write
 )
 
@@ -39,8 +47,11 @@ if __name__ == '__main__':
     entry = ""
 
     if len(sys.argv) == 1:
+        snack.stack_run(stack_filename) # run default function
+        exit(0)
+    elif sys.argv[1] == 'help':
         display_menu()
-    elif sys.argv[1] != 'a':
+    elif sys.argv[1] != '':
         for i in range(1, len(sys.argv)):
             user_command += str(sys.argv[i])
     else:
