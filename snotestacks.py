@@ -1,7 +1,7 @@
 import datetime
 
 # noinspection SpellCheckingInspection
-timech = 27
+TIME_BUFFER = 13
 
 
 def attempt_entry_write(entry_file, msg):
@@ -16,6 +16,12 @@ def attempt_entry_write(entry_file, msg):
     else:
         entry_file.write(stamp_time(entered_line) + '\n')
     return True
+
+
+def quick_write(filename, entry):
+    with open(filename, 'a') as entry_file:
+        entry_file.write((stamp_time(entry) + '\n'))
+        print("recorded.")
 
 
 def stack_run(filename):
@@ -35,15 +41,19 @@ def read_stack(filename):
 def read_simple(filename):
     with open(filename, 'r') as stack_file:
         for line in stack_file.readlines():
-            print(" " + line[timech:], end='')
-
-
-def quick_write(filename, entry):
-    with open(filename, 'a') as entry_file:
-        entry_file.write((stamp_time(entry) + '\n'))
-        print("recorded.")
+            print(" " + line[TIME_BUFFER:], end='')
 
 
 def stamp_time(usr_str):
-    x = datetime.datetime.now()
-    return str(x.strftime("%c")) + ":  " + usr_str
+    x = datetime.date.today()
+    return str(x) + ":  " + usr_str
+
+
+def get_today_entry(filename):
+    x = datetime.date.today()
+
+    with open(filename, 'r') as stack_file:
+        for line in stack_file.readlines():
+            entry_date = line[0:TIME_BUFFER - 3]
+            if entry_date == str(x):
+                print(line, end='')

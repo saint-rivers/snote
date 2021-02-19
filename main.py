@@ -31,7 +31,7 @@ def display_menu():
 
 def run_interface(filename):
     display_menu()
-    run_command(get_help_input(), filename, "")
+    run_command(get_help_input(), filename)
 
 
 def run_command(command, filename):
@@ -39,7 +39,6 @@ def run_command(command, filename):
         command_dict[command](filename)
         return
     except KeyError:
-        print(error)
         print(command_not_found_message)
         return
 
@@ -72,6 +71,7 @@ command_dict = dict(
     stack=snack.stack_run,
     reads=snack.read_simple,
     readsimple=snack.read_simple,
+    readtoday=snack.get_today_entry,
     help=run_interface
 )
 
