@@ -45,15 +45,20 @@ def read_simple(filename):
 
 
 def stamp_time(usr_str):
-    x = datetime.date.today()
-    return str(x) + ":  " + usr_str
+    today = datetime.date.today()
+    return str(today) + ":  " + usr_str
 
 
 def get_today_entry(filename):
-    x = datetime.date.today()
-
+    today = datetime.date.today()
     with open(filename, 'r') as stack_file:
         for line in stack_file.readlines():
             entry_date = line[0:TIME_BUFFER - 3]
-            if entry_date == str(x):
+            if entry_date == str(today):
                 print(line, end='')
+
+
+def read_recent(filename):
+    with open(filename, 'r') as stack_file:
+        for line in stack_file.readlines():
+            pass
