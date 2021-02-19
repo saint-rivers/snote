@@ -23,6 +23,7 @@ def stack_run(filename):
         is_operating = attempt_entry_write(entry_file, 'start typing')
         while is_operating:
             is_operating = attempt_entry_write(entry_file, 'keep typing')
+    print('recorded')
 
 
 def read_stack(filename):
@@ -37,9 +38,9 @@ def read_simple(filename):
             print(" " + line[timech:], end='')
 
 
-def quick_write(filename, str):
+def quick_write(filename, entry):
     with open(filename, 'a') as entry_file:
-        entry_file.write((stamp_time(str) + '\n'))
+        entry_file.write((stamp_time(entry) + '\n'))
         print("recorded.")
 
 

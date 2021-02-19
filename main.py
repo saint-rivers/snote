@@ -34,14 +34,12 @@ def run_interface(filename):
     run_command(get_help_input(), filename, "")
 
 
-def run_command(command, filename, entry):
+def run_command(command, filename):
     try:
-        command_dict[command](filename, entry)
-        return
-    except TypeError:
         command_dict[command](filename)
         return
     except KeyError:
+        print(error)
         print(command_not_found_message)
         return
 
@@ -90,9 +88,10 @@ if __name__ == '__main__':
     elif sys.argv[1] == 'q':
         # add every subsequent parameters as an entry
         q_entry = get_quick_entry()
-
+        snack.quick_write(stack_filename, q_entry)
+        exit(0)
     # if it's not a quick entry
     else:
         user_command = read_user_commands()
 
-    run_command(user_command, stack_filename, q_entry)
+    run_command(user_command, stack_filename)
